@@ -23,6 +23,8 @@
         TextView textView_read = null;
         TextView textView_delete = null;
         TextView textView_update = null;
+        TextView textView_find = null;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@
             textView_delete = (TextView) findViewById(R.id.textView_delete);
             Button updateButton = (Button) findViewById(R.id.updateButton);
             textView_update = (TextView) findViewById(R.id.textView_update);
+            Button findButton = (Button) findViewById(R.id.FindButton);
+            textView_find = (TextView) findViewById(R.id.textView_find);
             addButton.setOnClickListener(new View.OnClickListener() {
                 //including onClick() method
                 public void onClick(View v) {
@@ -68,6 +72,34 @@
                     updateDatabase.execute();
                 }
             });
+            findButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    findData finddata = new findData();
+                    finddata.execute();
+                }
+            });
+        }
+
+        private  class findData extends  AsyncTask<Void, Void, String> {
+            @Override
+            protected String doInBackground(Void... params) {
+                if (!(editText.getText().toString().isEmpty())) {
+                    List<Customer> users = db.customerDao().getAll();
+                    String[] details = editText.getText().toString().split(" ");
+                    int userid = Integer.parseInt(details[0]);
+                    Customer temp = db.customerDao().findByID(userid);
+                    String userstr = (temp.getId() + " " +
+                            temp.getFirstName() + " " + temp.getLastName() + " "+ temp.getweight()+ " , " );
+                    return userstr;
+                }
+                else
+                    return "";
+            }
+            @Override
+            protected void onPostExecute(String details){
+                textView_find.setText("Matched record: " + details);
+            }
         }
         private class InsertDatabase extends AsyncTask<Void, Void, String> {
             @Override

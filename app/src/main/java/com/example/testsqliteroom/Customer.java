@@ -20,6 +20,9 @@ public class Customer {
         this.weight=weight;
     }
 
+    public Customer() {
+    }
+
     public int getId() {
         return uid;
     }

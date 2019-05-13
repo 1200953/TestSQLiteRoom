@@ -59,10 +59,9 @@
         android:layout_below="@+id/textView_update"
         android:text="find by id" />
     <TextView
-        android:id="@+id/text_View_find"
+        android:id="@+id/textView_find"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/FindButton"
-        />
+        android:layout_below="@+id/FindButton" />
 
 </RelativeLayout>
